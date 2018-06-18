@@ -16,7 +16,7 @@ public class SecurityController {
         return "welcome";
     }
 
-    @GetMapping(value = "login")
+    @GetMapping(value = "userLogin")
     public String loginPage(){
         return PREFIX+"login";
     }

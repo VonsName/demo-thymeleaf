@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<p style="color: red">登录页面</p>
+<p style="color: red">欢迎登录页面</p>
+    <form th:action="@{/login}" th:method="post">
+        用户：<input type="text"  name="username" ><br>
+        密码：<input type="password"  name="password"><br>
+             <input type="checkbox" name="remember">记住我
+        <input th:type="submit" th:value="登陆"><br>
+    </form>
 </body>
 </html>

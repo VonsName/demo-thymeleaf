@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>测试</title>
 </head>
 <body>
-    <p style="color: red">欢迎光临</p>
-    <h1>level1</h1>
-    <ul>
-        <li><a th:href="@{/level1/1}">11111</a> </li>
-        <li><a th:href="@{/level1/2}">22222</a> </li>
-        <li><a th:href="@{/level1/3}">33333</a> </li>
-    </ul>
-    <h1>level2</h1>
-    <ul>
-        <li><a th:href="@{/level2/1}">11111</a> </li>
-        <li><a th:href="@{/level2/2}">22222</a> </li>
-        <li><a th:href="@{/level2/3}">33333</a> </li>
-    </ul>
-    <h1>level3</h1>
-    <ul>
-        <li><a th:href="@{/level3/1}">11111</a> </li>
-        <li><a th:href="@{/level3/2}">22222</a> </li>
-        <li><a th:href="@{/level3/3}">33333</a> </li>
-    </ul>
+    <!--sec:authorize="isAuthenticated()" 认证通过显示登出-->
+    <div sec:authorize="isAuthenticated()">
+        <!--sec:authentication="name" 取出登陆的用户名-->
+        <h1><span sec:authentication="name"></span>您的角色有
+            <!--principal.authorities 取出登陆用户拥有的角色-->
+            <span sec:authentication="principal.authorities"></span></h1>
+        <form th:action="@{/logout}" th:method="post">
+            <input th:type="submit" th:value="登出">
+        </form>
+    </div>
+    <!--sec:authorize="!isAuthenticated()" 没有认证显示登陆-->
+    <p style="color: red" sec:authorize="!isAuthenticated()"><a th:href="@{/userLogin}">欢迎光临登陆</a></p>
+   <div sec:authorize="hasRole('VIP1')">
+       <h1>level1</h1>
+       <ul sec:authentication="">
+           <li><a th:href="@{/level1/1}">11111</a> </li>
+           <li><a th:href="@{/level1/2}">22222</a> </li>
+           <li><a th:href="@{/level1/3}">33333</a> </li>
+       </ul>
+   </div>
+    <div sec:authorize="hasRole('VIP2')">
+        <h1>level2</h1>
+        <ul>
+            <li><a th:href="@{/level2/1}">11111</a> </li>
+            <li><a th:href="@{/level2/2}">22222</a> </li>
+            <li><a th:href="@{/level2/3}">33333</a> </li>
+        </ul>
+    </div>
+    <div sec:authorize="hasRole('VIP3')">
+        <h1>level3</h1>
+        <ul>
+            <li><a th:href="@{/level3/1}">11111</a> </li>
+            <li><a th:href="@{/level3/2}">22222</a> </li>
+            <li><a th:href="@{/level3/3}">33333</a> </li>
+        </ul>
+    </div>
 </body>
 </html>
